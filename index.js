@@ -4,6 +4,7 @@
 const dotenv = require('dotenv');
 const path = require('path');
 const restify = require('restify');
+const { TwilioWhatsAppAdapter } = require('@botbuildercommunity/adapter-twilio-whatsapp');
 
 // Import required bot services.
 // See https://aka.ms/bot-services to learn more about the different parts of a bot.
@@ -30,7 +31,20 @@ const adapter = new BotFrameworkAdapter({
     appId: process.env.MicrosoftAppId,
     appPassword: process.env.MicrosoftAppPassword
 });
+const whatsAppAdapter = new TwilioWhatsAppAdapter({
+    accountSid: 'AC4ce1f98f73aec463a1c5f80b727bcb53', // Account SID
+    authToken: '8090c5683dd450d8ae68abbc9e409410', // Auth Token
+    phoneNumber: 'whatsapp:+14155238886', // The From parameter consisting of whatsapp: followed by the sending WhatsApp number (using E.164 formatting)
+    endpointUrl: 'https://austelltest.azurewebsites.net/whatsapp/messages' // Endpoint URL you configured in the sandbox, used for validation
+});
 
+// WhatsApp endpoint for Twilio
+server.post('/api/whatsapp/messages', (req, res) => {
+    whatsAppAdapter.processActivity(req, res, async (context) => {
+        // Route to main dialog.
+        await bot.run(context);
+    });
+});
 // Catch-all for errors.
 const onTurnErrorHandler = async (context, error) => {
     // This check writes out errors to console log .vs. app insights.
