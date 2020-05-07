@@ -35,7 +35,7 @@ const whatsAppAdapter = new TwilioWhatsAppAdapter({
     accountSid: 'AC4ce1f98f73aec463a1c5f80b727bcb53', // Account SID
     authToken: '8090c5683dd450d8ae68abbc9e409410', // Auth Token
     phoneNumber: 'whatsapp:+14155238886', // The From parameter consisting of whatsapp: followed by the sending WhatsApp number (using E.164 formatting)
-    endpointUrl: 'https://austelltest.azurewebsites.net/whatsapp/messages' // Endpoint URL you configured in the sandbox, used for validation
+    endpointUrl: 'https://austelltest.azurewebsites.net/api/whatsapp/messages' // Endpoint URL you configured in the sandbox, used for validation
 });
 
 // WhatsApp endpoint for Twilio
